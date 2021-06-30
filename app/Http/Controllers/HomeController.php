@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Meetup;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $meetups = Meetup::all();
+        return view('home', compact('meetups'));
+    }
+
+    public function saveMeetup(Request $request){
+        $meetup = new Meetup();
+        $meetup->name = $request->name;
+        $meetup->save();
+        return redirect()->back();
+    }
+
+    public function joinMeetup(Request $request){
+        return view('meetup');
     }
 }
